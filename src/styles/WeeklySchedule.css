@@ -1,0 +1,51 @@
+/* WeeklySchedule.css */
+
+.weekly-schedule {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Title */
+.weekly-schedule h2 {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 1rem;
+}
+
+/* Grid for days */
+.schedule-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7 days */
+  gap: 0.75rem;
+}
+
+/* Individual day cell */
+.schedule-grid div {
+  background-color: #f3f4f6; /* light gray */
+  border-radius: 6px;
+  padding: 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #374151;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.05);
+}
+
+/* Highlight for current day */
+.schedule-grid .today {
+  background-color: #2563eb; /* blue */
+  color: #ffffff;
+  font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  .schedule-grid {
+    grid-template-columns: repeat(2, 1fr); /* show 2 days per row */
+  }
+}
+

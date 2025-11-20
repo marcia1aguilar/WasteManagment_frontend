@@ -1,30 +1,34 @@
+/* Header.css */
+
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
+  display: flex;
+  justify-content: space-between; /* logo left, button right */
+  align-items: center;
+  background-color: #1f2937; /* dark gray */
+  color: #ffffff;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+/* Logo styling */
 .logo {
-    font-size: 24px;
-    font-weight: bold;
+  font-size: 1.5rem;
+  font-weight: bold;
+  letter-spacing: 1px;
 }
 
-.sign-out-button {
-    background-color: #f44336;
-    border: none;
-    color: white;
-    padding: 10px 15px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 4px;
+/* Sign out button */
+.signout-btn {
+  background-color: #ef4444; /* red */
+  color: #ffffff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: background-color 0.2s ease;
 }
-.sign-out-button:hover {
-    background-color: #d32f2f;
+
+.signout-btn:hover {
+  background-color: #dc2626; /* darker red on hover */
 }

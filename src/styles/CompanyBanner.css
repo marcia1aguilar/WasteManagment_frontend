@@ -1,0 +1,23 @@
+/* CompanyBanner.css */
+
+.company-banner {
+  width: 100%;
+  max-width: 400px; /* keeps it from stretching too wide */
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* Banner image */
+.company-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .company-banner {
+    max-width: 100%;
+  }
+}
