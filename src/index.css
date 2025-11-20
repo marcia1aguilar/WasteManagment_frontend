@@ -22,3 +22,28 @@ body {
   flex-direction: column;
 }
 
+/* index.css */
+body.dark-mode .dashboard {
+  background-color: #111827; /* dark background */
+  color: #f9fafb; /* light text */
+}
+
+body.dark-mode .profile-page {
+  background-color: #111827; /* dark background */
+  color: #f9fafb; /* light text */
+}
+
+/* Override cards and sidebar */
+body.dark-mode .sidebar {
+  background-color: #1f2937;
+  color: #f9fafb;
+}
+
+body.dark-mode .weekly-schedule,
+body.dark-mode .next-shift-card,
+body.dark-mode .feedback-card {
+  background-color: #3c4757;
+  color: #f9fafb;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+}
+

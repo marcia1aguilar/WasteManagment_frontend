@@ -1,10 +1,8 @@
-/* Header.css */
-
 .header {
   display: flex;
   justify-content: space-between; /* logo left, button right */
   align-items: center;
-  background-color: #1f2937; /* dark gray */
+  background-color: #3c4757; /* light gray */
   color: #ffffff;
   padding: 1rem 2rem;
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
@@ -15,7 +13,13 @@
   font-size: 1.5rem;
   font-weight: bold;
   letter-spacing: 1px;
+  transition: text-shadow 0.3s ease;
 }
+
+.logo:hover {
+  text-shadow: 0 0 8px #60a5fa; /* soft blue glow */
+}
+
 
 /* Sign out button */
 .signout-btn {
@@ -29,6 +33,42 @@
   transition: background-color 0.2s ease;
 }
 
+/* Hover color */
 .signout-btn:hover {
-  background-color: #dc2626; /* darker red on hover */
+  background-color: #dc2626; /* darker red */
 }
+
+/* Shake animation on hover */
+.signout-btn:hover {
+  animation: shake 0.4s ease-in-out;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.btns{
+  display: flex;
+  gap: 1rem;
+}
+
+.darkmode-btn {
+  background-color: transparent;
+  border: 1px solid #f9fafb;
+  color: #f9fafb;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.darkmode-btn:hover {
+  transform: scale(1.05);
+  background-color: rgba(255,255,255,0.1);
+}
+
+
