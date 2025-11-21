@@ -1,15 +1,16 @@
+
+import { NavLink } from "react-router-dom";
 import "../styles/Sidebar.css";
 
 export default function Sidebar() {
     return (
-        <aside className="sidebar">
-            <nav>
-                <ul>
-                    <li>Weekly Schedule</li>
-                    <li>Next Shift</li>
-                    <li>Feedback</li>
-                </ul>
-            </nav>
-        </aside>
+        <nav className="sidebar">
+            <ul>
+                <li><NavLink to="/" end>Dashboard</NavLink></li>
+                <li><NavLink to="/profile">Profile</NavLink></li>
+                <li><NavLink to="/feedback">Feedback</NavLink></li>
+                <li><NavLink to="/monthly-schedule">Monthly Schedule</NavLink></li>
+            </ul>
+        </nav>
     );
 }

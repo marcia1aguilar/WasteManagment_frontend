@@ -1,10 +1,18 @@
-/* Dashboard.css */
 
 /* Main container */
 .dashboard {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+}
+
+.fade-in {
+  animation: fadeIn 0.8s ease-in;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 /* Layout below the header */
@@ -16,9 +24,16 @@
 /* Sidebar on the left */
 .sidebar {
   width: 220px;
-  background-color: #1f2937; /* dark gray */
+  background-color: #1f2937;
   color: white;
   padding: 1rem;
+  min-height: 100vh;
+  animation: slideInLeft 0.6s ease-out;
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
 }
 
 /* Content area next to sidebar */
@@ -61,6 +76,32 @@
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+.next-shift-card,
+.feedback-card,
+.weekly-schedule {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.next-shift-card:hover,
+.feedback-card:hover,
+.weekly-schedule:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.company-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+  animation: zoomIn 1s ease;
+}
+
+@keyframes zoomIn {
+  from { transform: scale(1.1); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
 @media (max-width: 768px) {
   .main-layout {
     flex-direction: column;
@@ -69,6 +110,7 @@
   .sidebar {
     width: 100%;
     margin-bottom: 1rem;
+    min-height: fit-content;
   }
 
   .top-section {
