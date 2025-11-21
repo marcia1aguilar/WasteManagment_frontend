@@ -8,6 +8,8 @@ export default function Sidebar() {
             <ul>
                 <li><NavLink to="/" end>Dashboard</NavLink></li>
                 <li><NavLink to="/profile">Profile</NavLink></li>
+                <li><NavLink to="/feedback">Feedback</NavLink></li>
+                <li><NavLink to="/monthly-schedule">Monthly Schedule</NavLink></li>
             </ul>
         </nav>
     );

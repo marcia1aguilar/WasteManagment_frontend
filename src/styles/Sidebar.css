@@ -48,3 +48,22 @@
   font-weight: bold;
 }
 
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+    overflow-x: auto;
+  }
+
+  .sidebar ul {
+    flex-direction: row;
+    gap: 1rem;
+  }
+
+  .sidebar li a {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.9rem;
+  }
+}
+

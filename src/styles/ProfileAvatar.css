@@ -35,4 +35,6 @@
   border-radius: 50%;
   object-fit: cover;
 }
-
+body.dark-mode .profile-avatar p {
+  color: #f3f4f6;
+}

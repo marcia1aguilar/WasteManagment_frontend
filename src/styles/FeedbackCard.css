@@ -1,5 +1,3 @@
-/* FeedbackCard.css */
-
 .feedback-card {
   background-color: #ffffff;
   border-radius: 8px;
@@ -36,6 +34,10 @@
 .feedback-card p.negative {
   color: #dc2626; /* red */
   font-weight: 500;
+}
+
+body.dark-mode .feedback-card h3{
+  color: #f3f4f6;
 }
 
 @media (max-width: 768px) {

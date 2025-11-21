@@ -30,6 +30,13 @@
   color: #2563eb; /* blue highlight */
 }
 
+body.dark-mode .next-shift-card h3{
+  color: #f3f4f6;
+}
+body.dark-mode .next-shift-card p{
+  color: #f3f4f6;
+}
+
 @media (max-width: 768px) {
   .next-shift-card {
     width: 100%;

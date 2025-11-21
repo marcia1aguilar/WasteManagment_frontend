@@ -1,0 +1,99 @@
+.monthly-schedule-page {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: #f3f4f6;
+}
+
+.main-layout {
+  display: flex;
+  height: 100%;
+}
+
+.sidebar{
+  min-height: 100vh;
+}
+
+.content-area {
+  flex: 1;
+  padding: 2rem;
+  animation: fadeIn 0.6s ease-in-out;
+}
+
+.content-area h2 {
+  margin-bottom: 1.5rem;
+  font-size: 1.6rem;
+  color: #111827;
+}
+
+/* Calendar grid: 7 columns for days of week */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 1rem;
+}
+
+.calendar-day {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 0.75rem;
+  max-height: 90px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  transition: transform 0.2s ease;
+}
+
+.calendar-day:hover {
+  transform: translateY(-3px);
+}
+
+.day-number {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2563eb;
+}
+
+.shift-info {
+  font-size: 0.7rem;
+  color: #374151;
+}
+
+/* Dark mode overrides */
+body.dark-mode .calendar-day {
+  background-color: #1f2937;
+  color: #f9fafb;
+  box-shadow: 0 2px 6px rgba(255,255,255,0.1);
+}
+
+body.dark-mode .day-number {
+  color: #3b82f6;
+}
+body.dark-mode .shift-info {
+  color: #d1d5db;
+}
+body.dark-mode .monthly-schedule-page {
+  background-color: #111827;
+}
+body.dark-mode .content-area {
+  background-color: #111827;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .calendar-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .sidebar {
+    min-height: fit-content;
+  }
+  .content-area {
+    padding: 1rem;
+  }
+}
