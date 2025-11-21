@@ -39,6 +39,16 @@ export default function MonthlySchedulePage() {
         { date: "2025-11-30", shift: "10 AM - 4 PM" },
         ]);
     }, []);
+    /*const { operatorId } = useParams(); // /monthly-schedule/:operatorId
+    const [schedule, setSchedule] = useState([]);
+
+    // GET schedule from backend
+    useEffect(() => {
+        axios
+        .get(`http://localhost:5000/${operatorId}`)
+        .then((response) => setSchedule(response.data))
+        .catch((error) => console.error("Error fetching schedule:", error));
+    }, [operatorId]);*/
 
     const getDay = (dateStr) => new Date(dateStr).getDate();
 
