@@ -1,18 +1,42 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import ProfileAvatar from "../components/ProfileAvatar";
 import Sidebar from "../components/Sidebar";
 import "../styles/Profile.css";
 
 export default function Profile() {
+  const { operatorId } = useParams(); // /profile/:operatorId
   const [profile, setProfile] = useState(null);
+  const [formData, setFormData] = useState({ name: "", email: "", role: "" });
+  const [editMode, setEditMode] = useState(false);
 
+  //GET employee info
   useEffect(() => {
-    setProfile({
-      name: "Jane Doe",
-      email: "jane.doe@example.com",
-      role: "Operator",
-    });
-  }, []);
+    axios
+      .get(`http://localhost:5000/${operatorId}`)
+      .then((response) => {
+        setProfile(response.data);
+        setFormData({
+          name: response.data.name,
+          email: response.data.email,
+          role: response.data.role,
+        });
+      })
+      .catch((error) => console.error("Error fetching employee:", error));
+  }, [operatorId]);
+
+  //PATCH employee info
+  function handleUpdate(e) {
+    e.preventDefault();
+    axios
+      .patch(`http://localhost:5000/${operatorId}`, formData)
+      .then((response) => {
+        setProfile(response.data);
+        setEditMode(false);
+      })
+      .catch((error) => console.error("Error updating employee:", error));
+  }
 
   if (!profile) return <p>Loading...</p>;
 
@@ -35,8 +59,51 @@ export default function Profile() {
 
           <div className="profile-settings">
             <h3>Settings</h3>
-            <button className="edit-btn">Edit Profile</button>
-            <button className="password-btn">Change Password</button>
+            {!editMode ? (
+              <>
+                <button className="edit-btn" onClick={() => setEditMode(true)}>
+                  Edit Profile
+                </button>
+                <button className="password-btn">Change Password</button>
+              </>
+            ) : (
+              <form onSubmit={handleUpdate} className="edit-form">
+                <label>
+                  Name:
+                  <input
+                    type="text"
+                    value={formData.name}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  Email:
+                  <input
+                    type="email"
+                    value={formData.email}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
+                  />
+                </label>
+                <label>
+                  Role:
+                  <input
+                    type="text"
+                    value={formData.role}
+                    onChange={(e) =>
+                      setFormData({ ...formData, role: e.target.value })
+                    }
+                  />
+                </label>
+                <button type="submit">Save</button>
+                <button type="button" onClick={() => setEditMode(false)}>
+                  Cancel
+                </button>
+              </form>
+            )}
           </div>
         </div>
       </div>

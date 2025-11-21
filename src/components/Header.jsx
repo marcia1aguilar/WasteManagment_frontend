@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "../styles/Header.css";
 export default function Header() {
+    const navigate = useNavigate();
     const handleSignOut = () => {
-        // Signing out
-        console.log("User signed out");
+        localStorage.removeItem("operatorId");
+        navigate("/");
     }
 
     //Dark mode
