@@ -8,18 +8,18 @@ import "../styles/Profile.css";
 export default function Profile() {
   const { operatorId } = useParams(); // /profile/:operatorId
   const [profile, setProfile] = useState(null);
-  const [formData, setFormData] = useState({ name: "", email: "", role: "" });
+  const [formData, setFormData] = useState({ name: "", phone: "", role: "" });
   const [editMode, setEditMode] = useState(false);
 
   //GET employee info
   useEffect(() => {
     axios
-      .get(`http://localhost:5000/${operatorId}`)
+      .get(`http://localhost:5001/profile/${operatorId}`)
       .then((response) => {
         setProfile(response.data);
         setFormData({
           name: response.data.name,
-          email: response.data.email,
+          phone: response.data.phone,
           role: response.data.role,
         });
       })
@@ -30,7 +30,7 @@ export default function Profile() {
   function handleUpdate(e) {
     e.preventDefault();
     axios
-      .patch(`http://localhost:5000/${operatorId}`, formData)
+      .patch(`http://localhost:5001/profile/${operatorId}`, formData)
       .then((response) => {
         setProfile(response.data);
         setEditMode(false);
@@ -52,7 +52,7 @@ export default function Profile() {
             <ProfileAvatar />
             <div className="profile-info">
               <p><strong>Name:</strong> {profile.name}</p>
-              <p><strong>Email:</strong> {profile.email}</p>
+              <p><strong>Phone:</strong> {profile.phone}</p>
               <p><strong>Role:</strong> {profile.role}</p>
             </div>
           </div>
@@ -79,12 +79,12 @@ export default function Profile() {
                   />
                 </label>
                 <label>
-                  Email:
+                  Phone:
                   <input
-                    type="email"
-                    value={formData.email}
+                    type="text"
+                    value={formData.phone}
                     onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
+                      setFormData({ ...formData, phone: e.target.value })
                     }
                   />
                 </label>
