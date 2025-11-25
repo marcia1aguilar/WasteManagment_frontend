@@ -5,14 +5,14 @@ import ProfileAvatar from "../components/ProfileAvatar";
 import Sidebar from "../components/Sidebar";
 import "../styles/Profile.css";
 
-export default function Profile() {
-  const { operatorId } = useParams(); // /profile/:operatorId
+export default function UserAdmin() {
+  const { userId } = useParams(); // /profile/:operatorId
 
 
   //GET employee info
   useEffect(() => {
     axios
-      .get(`http://localhost:5001/profile/${operatorId}`)
+      .get(`http://localhost:5001/id/useradmin/${userId}`)
       .then((response) => {
         setProfile(response.data);
         setFormData({
@@ -27,7 +27,7 @@ export default function Profile() {
         });
       })
       .catch((error) => console.error("Error fetching employee:", error));
-  }, [operatorId]);
+  }, [userId]);
 
   const [profile, setProfile] = useState({});
   const [formData, setFormData] = useState({ firstname: "", lastname: "", birthdate: "", phone: "", email: "", teamid: "", roletype: "" });
@@ -53,7 +53,7 @@ export default function Profile() {
     };
 
     axios
-      .patch(`http://localhost:5001/profile/${operatorId}`, updatedData)
+      .patch(`http://localhost:5001/:id/useradmin/${userId}`, updatedData)
       .then((response) => {
         setProfile(response.data);
         setEditMode(false);
@@ -62,7 +62,7 @@ export default function Profile() {
       .catch((error) => console.error("Error updating employee:", error));
   }
 
-  const editingTemplate = (
+  const viewTemplate = (
     <form onSubmit={(e) =>
       handleUpdate(e)} className="edit-form">
       <label>
@@ -114,7 +114,7 @@ export default function Profile() {
       <label>
         Birth Date:
         <input
-          type="date"
+          type="text"
           name="birthdate"
           value={formData.birthdate}
           onChange={(e) =>
@@ -151,7 +151,7 @@ export default function Profile() {
     </form>
   );
 
-  const viewTemplate = (
+  const  updatingUser = (
     <>
       <div className="profile-info">
         <p><strong>Name:</strong> {`${profile.firstname} ${profile.lastname}`}</p>
@@ -163,9 +163,10 @@ export default function Profile() {
 
 
       <div className="profile-settings" >
-        <h3>Settings</h3>
+        <h3>Update User</h3>
 
         <button className="edit-btn" onClick={() => setEditMode(true)}> Edit Profile </button>
+        {editMode ? viewTemplate:""}
       </div >
     </>
   );
@@ -173,7 +174,7 @@ export default function Profile() {
 
   function handlePasswordReset() {
     axios
-      .patch(`http://localhost:5001/profile/${operatorId}/resetpassword`)
+      .patch(`http://localhost:5001/:id/useradmin/${userId}/resetpassword`)
       .then(() => alert("Password reset to default value"))
       .catch((err) => console.error("Error resetting password:", err));
   }
@@ -186,11 +187,11 @@ export default function Profile() {
           <Sidebar />
 
           <div className="content-area">
-            <h2>My Profile</h2>
+            <h2>User Administration</h2>
 
             <ProfileAvatar />
             <div className="profile-header">
-              {editMode ? editingTemplate : viewTemplate}
+              {editMode ? updatingUser : viewTemplate}
             </div>
             <button className="password-btn" onClick={() => handlePasswordReset()}> Reset Password</button>
           </div>
