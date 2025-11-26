@@ -1,18 +1,17 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import "../styles/WeeklySchedule.css";
 
-export default function WeeklySchedule() {
+export default function WeeklySchedule({ operatorId }) {
     const [schedule, setSchedule] = useState([]);
 
     useEffect(() => {
-        setSchedule([
-        { day: "Monday", shift: "9 AM - 5 PM" },
-        { day: "Tuesday", shift: "Off" },
-        { day: "Wednesday", shift: "1 PM - 9 PM" },
-        { day: "Thursday", shift: "7 AM - 3 PM" },
-        { day: "Friday", shift: "9 AM - 5 PM" },
-        ]);
-    }, []);
+        if (!operatorId) return;
+        axios
+            .get(`http://localhost:5001/schedule/${operatorId}/week`)
+            .then((response) => setSchedule(response.data))
+            .catch((error) => console.error("Error fetching weekly schedule", error));
+    }, [operatorId]);
 
     return (
         <section className="weekly-schedule">

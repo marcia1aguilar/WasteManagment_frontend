@@ -19,7 +19,7 @@ function App() {
         <Route path="/dashboard/:operatorId" element={<Dashboard />} />
         <Route path="/profile/:operatorId" element={<Profile />} />
         <Route path="/feedback/:operatorId" element={<Feedback />} />
-        <Route path="/monthly-schedule/:operatorId" element={<MonthlySchedule />} />
+        <Route path="/schedule/:operatorId" element={<MonthlySchedule />} />
       </Routes>
     </Router>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import CompanyBanner from "../components/CompanyBanner";
 import FeedbackCard from "../components/FeedbackCard";
 import NextShiftCard from "../components/NextShiftCard";
@@ -9,6 +10,8 @@ import "../styles/Dashboard.css";
 
 
 export default function Dashboard() {
+    
+    const { operatorId } = useParams();
     //Trigger animation only once when component mounts
     const [animate, setAnimate] = useState(false);
     useEffect(() => {
@@ -24,7 +27,7 @@ export default function Dashboard() {
                 <ProfileAvatar />
                 <CompanyBanner />
             </div>
-            <WeeklySchedule />
+            <WeeklySchedule operatorId={operatorId} />
             <div className="side-cards">
                 <NextShiftCard />
                 <FeedbackCard />
