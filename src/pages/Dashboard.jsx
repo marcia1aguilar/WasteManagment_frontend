@@ -29,8 +29,8 @@ export default function Dashboard() {
             </div>
             <WeeklySchedule operatorId={operatorId} />
             <div className="side-cards">
-                <NextShiftCard />
-                <FeedbackCard />
+                <NextShiftCard operatorId={operatorId} />
+                <FeedbackCard operatorId={operatorId} />
             </div>
             </div>
         </div>

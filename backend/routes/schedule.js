@@ -115,6 +115,48 @@ router.get('/:uid/week', async (req, res) => {
     }
 });
 
+router.get('/:uid/next', async (req, res) =>{
+    const uid =parseInt(req.params.uid);
+    if(Number.isNaN(uid)){
+        return res.status(400).json({ error: 'Invalid id' });
+    }
+
+    try{
+        const now = new Date();
+
+        // Query: find the next shift assigned to this operator
+        const result = await pool.query(
+        `SELECT s.workdate, s.starttime, s.endtime
+        FROM schedule s
+        INNER JOIN is_assigned_to i ON s.scheduleid = i.scheduleid
+        WHERE i.uid = $1
+            AND (s.workdate > $2::date
+                OR (s.workdate = $2::date AND s.starttime > $3::time))
+        ORDER BY s.workdate ASC, s.starttime ASC
+        LIMIT 1`,
+        [operatorId, now.toISOString().split('T')[0], now.toTimeString().split(' ')[0]]
+        );
+
+        if (result.rows.length === 0) {
+            return res.json({ day: null, time: "No upcoming shifts" });
+        }
+
+        const row = result.rows[0];
+        const dayName = new Date(row.workdate).toLocaleDateString("en-US", { weekday: "long" });
+
+        const formatTime = (t) =>
+            t ? new Date(`1970-01-01T${t}`).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : null;
+
+        res.json({
+            day: dayName,
+            time: `${formatTime(row.starttime)} - ${formatTime(row.endtime)}`
+        });
+    } catch (err) {
+        console.error("Error fetching next shift:", err.message);
+        res.status(500).json({ error: err.message });
+    }
+});
+
 
 
 module.exports = router;
