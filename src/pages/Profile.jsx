@@ -22,17 +22,17 @@ export default function Profile() {
           phone: response.data.phone,
           email: response.data.email,
           teamid: response.data.teamid,
-          roletype: response.data.roletype
-
+          roletype: response.data.roletype,
         });
       })
       .catch((error) => console.error("Error fetching employee:", error));
   }, [operatorId]);
 
   const [profile, setProfile] = useState({});
-  const [formData, setFormData] = useState({ firstname: "", lastname: "", birthdate: "", phone: "", email: "", teamid: "", roletype: "" });
+  const [formData, setFormData] = useState({ phone: "", email: "" });
   const [editMode, setEditMode] = useState(false);
-
+  const [passwordIn, setPasswordIn] = useState("");
+  const [editPassword, setEditPassword] = useState(false);
 
   if (!profile) return <p>Loading...</p>;
 
@@ -43,51 +43,44 @@ export default function Profile() {
     e.preventDefault();
 
     const updatedData = {
-      firstname: formData.firstname,
-      lastname: formData.lastname,
-      birthdate: formData.birthdate,
       phone: formData.phone,
-      email: formData.email,
-      teamid: formData.teamid,
-      roletype: formData.roletype
+      email: formData.email
     };
 
     axios
       .patch(`http://localhost:5001/profile/${operatorId}`, updatedData)
       .then((response) => {
         setProfile(response.data);
+        alert("Profile updated successfully!");
         setEditMode(false);
         setFormData(response.data);
+
+
       })
       .catch((error) => console.error("Error updating employee:", error));
   }
 
+  function handleUpdatePassword(e) {
+    e.preventDefault();
+
+    const updatedData = {
+      password: passwordIn
+    };
+
+    axios
+      .patch(`http://localhost:5001/profile/${operatorId}`, updatedData)
+      .then((response) => {
+        alert("Password updated successfully!");
+        setEditPassword(false);
+        setPasswordIn("");
+      })
+      .catch((error) => console.error("Error updating employee password:", error));
+  }
+
+
   const editingTemplate = (
     <form onSubmit={(e) =>
       handleUpdate(e)} className="edit-form">
-      <label>
-        First Name:
-        <input
-          type="text"
-          name="firstName"
-          value={formData.firstname}
-          onChange={(e) =>
-            setFormData({ ...formData, firstname: e.target.value })
-          }
-        />
-      </label>
-      <label>
-        Last Name:
-        <input
-          type="text"
-          name="lastName"
-          value={formData.lastname}
-          onChange={(e) =>
-            setFormData({ ...formData, lastname: e.target.value })
-          }
-        />
-      </label>
-
       <label>
         Phone:
         <input
@@ -111,44 +104,31 @@ export default function Profile() {
         />
       </label>
 
-      <label>
-        Birth Date:
-        <input
-          type="date"
-          name="birthdate"
-          value={formData.birthdate}
-          onChange={(e) =>
-            setFormData({ ...formData, birthdate: e.target.value })
-          }
-        />
-      </label>
-      <label>
-        TeamID:
-        <input
-          type="number"
-          name="teamid"
-          value={formData.teamid}
-          onChange={(e) =>
-            setFormData({ ...formData, teamid: e.target.value })
-          }
-        />
-      </label>
-      <label>
-        Role:
-        <input
-          type="number"
-          name="roletype"
-          value={formData.roletype}
-          onChange={(e) =>
-            setFormData({ ...formData, roletype: e.target.value })
-          }
-        />
-      </label>
       <button type="submit" >Save</button>
       <button type="button" onClick={() => setEditMode(false)}>
         Cancel
       </button>
     </form>
+  );
+
+  const changingPassword = (
+    <form onSubmit={(e) =>
+      handleUpdatePassword(e)} className="edit-form">
+
+    <h4>Change Password</h4>
+    <label> New Password:
+      <input
+        type="password"
+        name="password"
+        value={passwordIn}
+        onChange={(e) =>
+          setPasswordIn(e.target.value)
+        }
+      />
+    </label>
+
+    <button type="submit" >Save new Password</button>
+    <button type="button" onClick={() => setEditPassword(false)}>Cancel</button></form>    
   );
 
   const viewTemplate = (
@@ -163,20 +143,19 @@ export default function Profile() {
 
 
       <div className="profile-settings" >
-        <h3>Settings</h3>
+        <h3> Settings </h3>
 
         <button className="edit-btn" onClick={() => setEditMode(true)}> Edit Profile </button>
+      </div >
+
+      <div className="profile-settings" >
+        <h3> Change Password </h3>
+
+        <button className="edit-btn" onClick={() => setEditPassword(true)}> Edit Password </button>
       </div >
     </>
   );
 
-
-  function handlePasswordReset() {
-    axios
-      .patch(`http://localhost:5001/profile/${operatorId}/resetpassword`)
-      .then(() => alert("Password reset to default value"))
-      .catch((err) => console.error("Error resetting password:", err));
-  }
 
   return (
     <>
@@ -190,9 +169,10 @@ export default function Profile() {
 
             <ProfileAvatar />
             <div className="profile-header">
-              {editMode ? editingTemplate : viewTemplate}
+              {editMode ? editingTemplate :
+              editPassword ? changingPassword 
+              :viewTemplate}
             </div>
-            <button className="password-btn" onClick={() => handlePasswordReset()}> Reset Password</button>
           </div>
         </div>
       </div>

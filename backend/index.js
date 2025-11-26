@@ -7,7 +7,10 @@ require('dotenv').config(); //get info from .env
 
 //One connection per API
 //API to get employees info
+
 const employeeRouter = require('./routes/employee')
+const scheduleRouter = require('./routes/schedule')
+const feedbackRouter = require('./routes/feedback')
 
 //Connection to database
 const pool = require('./db');
@@ -31,7 +34,9 @@ pool
     });
 
 //Defining that path that the frontend will sent and how backend will redirect it
-app.use('/profile', employeeRouter);
+app.use('/', employeeRouter);
+app.use('/schedule', scheduleRouter);
+app.use('/feedback', feedbackRouter);
 
 //Start the server
 app.listen(PORT, ()=>{

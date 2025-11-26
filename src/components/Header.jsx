@@ -1,7 +1,13 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import "../styles/Header.css";
+
 export default function Header() {
+    const location = useLocation();
+    if(location.pathname === "/"){
+        return null;
+    }
+
     const navigate = useNavigate();
     const handleSignOut = () => {
         localStorage.removeItem("operatorId");
