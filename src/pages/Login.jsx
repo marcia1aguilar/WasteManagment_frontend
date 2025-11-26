@@ -14,7 +14,7 @@ export default function Login() {
    function handleSubmit(e) {
     e.preventDefault();
 
-    axios.post("http://localhost:5001/profile/login", {
+    axios.post("http://localhost:5001/login", {
         email:email,
         password:password,
     })
