@@ -192,8 +192,8 @@ router.post('/useradmin/:operatorId/', async (req, res) => {
 
 
 
-    if (!firstname?.trim() || !lastname?.trim() || !email?.trim() || roletype < 1 || roletype > 2) { //? in case non exist
-        return res.status(400).json({ message: "Firstname, lastname, email, and correct roletype are required" });
+    if (!firstname?.trim() || !lastname?.trim() || !email?.trim() || !teamid?.trim() || roletype < 1 || roletype > 2) { //? in case non exist
+        return res.status(400).json({ message: "Firstname, lastname, email, teamId, and correct roletype are required" });
     }
 
     const passwordDefault = "1234"

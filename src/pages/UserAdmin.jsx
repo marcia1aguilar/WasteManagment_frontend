@@ -103,7 +103,15 @@ export default function UserAdmin() {
         setProfileTargetId(response.data);
 
       })
-      .catch((error) => {alert("First name, last name, roletype or teamID missing!");
+      .catch((error) => {
+        if (error.response && error.response.status === 400) {
+          alert("Firstname, lastname, email, teamID and correct roletype are required");
+        } else if (error.response && error.response.status === 403) {
+          alert("Access Denied. Ask your Admin for permission");
+        } else {
+          console.error("Error fetching employee:", error);
+          alert("An unexpected error occurred while fetching the profile.");
+        }
         console.error("Error creating employee:", error)});
   }
 

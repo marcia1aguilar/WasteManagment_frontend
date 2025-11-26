@@ -48,7 +48,7 @@ export default function Sidebar() {
                     </NavLink>
                 </li>
                 <li>
-                    <NavLink to={`/monthly-schedule/${operatorId}`}>
+                    <NavLink to={`/schedule/${operatorId}`}>
                         Monthly Schedule
                     </NavLink>
                 </li>
