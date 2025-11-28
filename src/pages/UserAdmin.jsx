@@ -23,6 +23,8 @@ export default function UserAdmin() {
   const [editMode, setEditMode] = useState(false);
   const [createMode, setCreateMode] = useState(false);
 
+  const [messageAlarm, setMessageAlarm] = useState("");
+
   const cleanFormData = ({
     uid: "",
     firstname: "",
@@ -59,7 +61,8 @@ export default function UserAdmin() {
       })
       .catch((error) => {
         if (error.response && error.response.status === 404) {
-          alert(`Employee ID ${targetId} not found.`);
+          setMessageAlarm(`Employee ID ${targetId} not found.`);
+          setTimeout(function () { setMessageAlarm(""); }, 2000);
           setFormData(cleanFormData);
         }
         console.error("Error fetching employee:", error);
@@ -72,10 +75,14 @@ export default function UserAdmin() {
       .delete(`http://localhost:5001/useradmin/${operatorId}/${targetId}`)
       .then((response) => {
         setProfileTargetId(cleanFormData);
+        setMessageAlarm(`Employee ID ${targetId} deleted successfully!`);
+        setTimeout(function () { setMessageAlarm(""); }, 2000);
       })
       .catch((error) => {
         if (error.response && error.response.status === 404) {
-          alert(`Employee ID ${targetId} not found.`);
+          setMessageAlarm(`Employee ID ${targetId} not found.`);
+          setTimeout(function () { setMessageAlarm(""); }, 2000);
+
         }
         console.error("Error fetching employee:", error);
       })
@@ -101,18 +108,25 @@ export default function UserAdmin() {
         setCreateMode(false);
         setFormData(response.data);
         setProfileTargetId(response.data);
+        setMessageAlarm("User created successfully!");
+        setTimeout(function () { setMessageAlarm(""); }, 2000);
 
       })
       .catch((error) => {
         if (error.response && error.response.status === 400) {
-          alert("Firstname, lastname, email, teamID and correct roletype are required");
+          setMessageAlarm("Firstname, lastname, email, teamID and correct roletype are required");
+          setTimeout(function () { setMessageAlarm(""); }, 2000);
         } else if (error.response && error.response.status === 403) {
-          alert("Access Denied. Ask your Admin for permission");
+          setMessageAlarm("Access Denied. Ask your Admin for permission");
+          setTimeout(function () { setMessageAlarm(""); }, 2000);
+
         } else {
           console.error("Error fetching employee:", error);
-          alert("An unexpected error occurred while fetching the profile.");
+          setMessageAlarm("An unexpected error occurred while fetching the profile.");
+          setTimeout(function () { setMessageAlarm(""); }, 2000);
         }
-        console.error("Error creating employee:", error)});
+        console.error("Error creating employee:", error)
+      });
   }
 
   //PATCH employee info. 
@@ -127,7 +141,7 @@ export default function UserAdmin() {
       email: formData.email,
       teamid: formData.teamid,
       roletype: formData.roletype,
-      uid:formData.uid
+      uid: formData.uid
     };
 
     axios
@@ -366,17 +380,19 @@ export default function UserAdmin() {
                 />
               </label>
               <div>
-                <button className="edit-btn" onClick={() => {getProfileTargetId(operatorId, targetId);setCreateMode(false)}} > Get Profile</button>
+                <button className="edit-btn" onClick={() => { getProfileTargetId(operatorId, targetId); setCreateMode(false) }} > Get Profile</button>
                 <button className="edit-btn" onClick={() => deleteProfileTargetId(operatorId, targetId)} > Delete Profile</button>
 
               </div>
             </div>
-            {editMode ? updateView : !profileTargetId ? "" : !createMode?targetUser:""}
+            {messageAlarm}
+
+            {editMode ? updateView : !profileTargetId ? "" : !createMode ? targetUser : ""}
 
 
             <div className="profile-header">
               <div>
-                <button className="edit-btn" onClick={() => { setCreateMode(true);setEditMode(false);setFormData(cleanFormData); }} > Create New Profile</button>
+                <button className="edit-btn" onClick={() => { setCreateMode(true); setEditMode(false); setFormData(cleanFormData); }} > Create New Profile</button>
                 {createMode ? createView : ""}
 
               </div>
